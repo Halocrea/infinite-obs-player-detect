@@ -17,3 +17,13 @@ Notice: In OBS, the refresh rate for text sources is 1 second, which can feel a 
 ## Player name, color, both
 
 Once running, the program will save the current PoV's side ("Red" or "Blue") and playername individually in `side.txt` and `player.txt`, but also combined in `side_and_player.txt`.
+
+## Build the sources
+
+⚠️ **You don't need to do any of this to run this program. This part is for developers only.** ⚠️
+
+Make sure to replace `absolute/path/to` by the absolute path to this folder on your local computer.
+
+```
+pyinstaller --noconfirm --onedir --windowed --icon "absolute/path/to/obs-infinite-player-detect/assets/favicon.ico" --clean --log-level "CRITICAL" --add-data "absolute/path/to/obs-infinite-player-detect/assets;assets/" --add-data "absolute/path/to/obs-infinite-player-detect/LICENSE;." --add-data "absolute/path/to/obs-infinite-player-detect/player.txt;." --add-data "absolute/path/to/obs-infinite-player-detect/README.md;." --add-data "absolute/path/to/obs-infinite-player-detect/side.txt;." --add-data "absolute/path/to/obs-infinite-player-detect/side_and_player.txt;." --add-data "absolute/path/to/obs-infinite-player-detect/text-overdrive.lua;." --collect-all "easyocr"  "absolute/path/to/obs-infinite-player-detect/main.py"
+```
