@@ -1,5 +1,8 @@
-## Requirements & Notices
+# Halo Infinite Observer's player detection
+
 The program expects the input to be a camera and to be 1080p.
+
+## Requirements & Notices
 
 If you're using OBS, you won't be able to use the built-in virtual cam, you'll have to install https://obsproject.com/forum/resources/obs-virtualcam.949/.
 
@@ -10,3 +13,7 @@ Notice: In OBS, the refresh rate for text sources is 1 second, which can feel a 
 ## Player name, color, both
 
 Once running, the program will save the current PoV's side ("Red" or "Blue") and playername individually in `side.txt` and `player.txt`, but also combined in `side_and_player.txt`.
+
+## How to Download & use 
+
+Go to the [Release page](https://github.com/Halocrea/infinite-obs-player-detect/releases) and follow the instructions of the latest release. 
