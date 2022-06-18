@@ -1,8 +1,9 @@
 from difflib import SequenceMatcher
 from PIL import Image, ImageTk
 from threading import Thread
-import PySimpleGUI as sg
+from time import time, sleep
 import numpy as np
+import PySimpleGUI as sg
 import cv2 as cv
 import os
 import easyocr
@@ -26,15 +27,16 @@ def check_cam_by_index(i, window, stop):
     # last_bottom_right = 0
     current_player = ''
     side = ''
+    starttime = time()
 
     cap = cv.VideoCapture(i)
     cap.set(cv.CAP_PROP_FRAME_WIDTH, 1920)
     cap.set(cv.CAP_PROP_FRAME_HEIGHT, 1080)
-
     if not cap.isOpened():
         print("Cannot open camera")
         exit()
     while True:
+        sleep(0.2 - ((time() - starttime) % 0.2))
         # Capture frame-by-frame
         ret, frame = cap.read()
         # if frame is read correctly ret is True
