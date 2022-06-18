@@ -17,6 +17,7 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 # haystack_img = cv.imread('assets/sample.jpg', cv.IMREAD_UNCHANGED)
 needle_img = cv.imread('assets/arrow2.jpg', cv.IMREAD_UNCHANGED)
+needle_img = cv.resize(needle_img, (0,0), fx=0.5, fy=0.5) 
 reader = easyocr.Reader(['en'])
 
 def similar(a, b):
@@ -27,16 +28,16 @@ def check_cam_by_index(i, window, stop):
     # last_bottom_right = 0
     current_player = ''
     side = ''
-    starttime = time()
 
     cap = cv.VideoCapture(i)
-    cap.set(cv.CAP_PROP_FRAME_WIDTH, 1920)
-    cap.set(cv.CAP_PROP_FRAME_HEIGHT, 1080)
+    cap.set(cv.CAP_PROP_FRAME_WIDTH, 1920//2)
+    cap.set(cv.CAP_PROP_FRAME_HEIGHT, 1080//2)
+    cap.set(cv.CAP_PROP_FPS, 10)
     if not cap.isOpened():
         print("Cannot open camera")
         exit()
     while True:
-        sleep(0.2 - ((time() - starttime) % 0.2))
+        sleep(0.2)
         # Capture frame-by-frame
         ret, frame = cap.read()
         # if frame is read correctly ret is True
@@ -44,7 +45,7 @@ def check_cam_by_index(i, window, stop):
             print("Can't receive frame (stream end?). Exiting ...")
             break
         
-        cropu1 = frame[65:270,0:1920]
+        cropu1 = frame[round(65/2):round(270/2),0:round(1920/2)]
         result = cv.matchTemplate(cropu1, needle_img, cv.TM_CCOEFF_NORMED)
         # get the best match position
         min_val, max_val, min_loc, max_loc = cv.minMaxLoc(result)
@@ -54,32 +55,37 @@ def check_cam_by_index(i, window, stop):
             # get dimensions of the needle image
             needle_h = needle_img.shape[0]
 
-            last_top_left = max_loc
-            top = last_top_left[1]
-            bottom = top + needle_h
-            left = last_top_left[0] + 90
-            right = left + 270
-            # last_bottom_right = (right, bottom)
-            cropu2 = cropu1[top:bottom, left:right]
+            if (max_loc != last_top_left):
+                last_top_left = max_loc
+                top = last_top_left[1]
+                bottom = top + needle_h
+                left = last_top_left[0] + round(90/2)
+                right = left + round(270/2)
+                # last_bottom_right = (right, bottom)
+                cropu2 = cropu1[top:bottom, left:right]
 
-            player = current_player
-            if reader.readtext(image = cropu2, detail = 0):
-                player = reader.readtext(image = cropu2, detail = 0)[0].rstrip()
-            if current_player != player and similar(current_player, player) < 0.7:
-                current_player = player
-                if left > 960:
-                    side = 'Blue'
-                else:
-                    side = 'Red'
-                print(current_player)
-                text = ' ' + side + ' | ' + current_player + ' '
-                with open('player.txt', 'w') as f:
-                    f.write(current_player)
-                with open('side.txt', 'w') as f:
-                    f.write(side)
-                with open('side_and_player.txt', 'w') as f:
-                    f.write(text)
-                window['-TEXT-2'].update('Player:' + text)
+                player = current_player
+                text = reader.readtext(image = cropu2, detail = 0)
+                if text:
+                    player = text[0].rstrip()
+                if current_player != player and similar(current_player, player) < 0.7:
+                    current_player = player
+                    if left > round(960/2):
+                        side = 'Blue'
+                    else:
+                        side = 'Red'
+
+                    text = ' ' + side + ' | ' + current_player + ' '
+                    with open('player.txt', 'w') as f:
+                        f.write(current_player)
+                        f.close()
+                    with open('side.txt', 'w') as f:
+                        f.write(side)
+                        f.close()
+                    with open('side_and_player.txt', 'w') as f:
+                        f.write(text)
+                        f.close()
+                    window['-TEXT-2'].update('Player:' + text)
 
         if stop():
             break
@@ -134,11 +140,13 @@ def main():
     window = sg.Window('Infinite Obs Player Detect', layout, icon = 'assets/favicon.ico', finalize = True)
     watch_thread = None
     stop_current_thread = False
+
     global allCams
     for i in allCams:
         get_webcam_preview(i, window)
 
     while True:
+        sleep(0.2)
         event, values = window.read()
 
         if event == sg.WIN_CLOSED:
