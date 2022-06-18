@@ -1,5 +1,9 @@
 # Halo Infinite Observer's player detection
 
+An app to use with Halo Infinite's Observer mode, to automatically detect and output the username and team of the current PoV.
+
+## Pre-requisite(s)
+
 The program expects the input to be a camera and to be 1080p.
 
 ## Download & Usage
