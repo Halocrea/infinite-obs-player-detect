@@ -16,7 +16,7 @@ If you're using OBS, you won't be able to use the built-in virtual cam, you'll h
 
 Once you've installed it and opened OBS, go to `tool` then click on `Virtual Cam`, and `Start`.
 
-Notice: In OBS, the refresh rate for text sources is 1 second, which can feel a bit "unresponsive". To change it, you can install the `text-overdrive.lua` script. To do so, in OBS go to `tools` then `Scripts`. Once that's done, in the "Source" field, enter the name of the text source you'll be using to display the player names.
+Notice: In OBS, the refresh rate for text sources is 1 second, which can feel a bit "unresponsive". To change it, you can install the `text-overdrive.lua` script (included in the release). To do so, in OBS go to `tools` then `Scripts`. Once that's done, in the "Source" field, enter the name of the text source you'll be using to display the player names.
 
 ## Player name, color, both
 
