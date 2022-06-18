@@ -1,5 +1,12 @@
-## Requirements & Notices
+# Halo Infinite Observer's player detection
+
 The program expects the input to be a camera and to be 1080p.
+
+## Download & Usage
+
+Go to the [Release page](https://github.com/Halocrea/infinite-obs-player-detect/releases) and follow the instructions of the latest release. 
+
+## Requirements & Notices
 
 If you're using OBS, you won't be able to use the built-in virtual cam, you'll have to install https://obsproject.com/forum/resources/obs-virtualcam.949/.
 
