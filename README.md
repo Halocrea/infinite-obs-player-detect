@@ -20,7 +20,7 @@ Notice: In OBS, the refresh rate for text sources is 1 second, which can feel a 
 
 ## Player name, color, both
 
-Once running, the program will save the current PoV' side ("Red" or "Blue") and playername individually in `side.txt` and `player.txt`, but also combined in `side_and_player.txt`.
+Once running, the program will save the current PoV' side ("Red" or "Blue") and playername individually in `side.txt` and `player.txt`, but also combined in `side_and_player.txt`. You can set any of these text files as sources in your OBS/vMix.
 
 ## Build the sources
 
